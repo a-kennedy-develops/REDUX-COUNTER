@@ -1,66 +1,48 @@
-import { createStore } from 'redux';
-import { createSlice, configureStore } from '@reduxjs/toolkit'
+// import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit'
 
-const initialState = { counter: 0, showCounter: true };
-
-const counterSlice = createSlice({
-    name: 'counter',
-    initialState,
-    reducers: {
-        increment(state) {
-            // You CAN mutate with this setup
-            state.counter++;
-        },
-        decrement(state) {
-            state.counter--;
-        },
-        increase(state, action) {
-            state.counter = state.counter + action.payload;
-        },
-        toggleCounter(state) {
-            state.showCounter = !state.showCounter;
-        }
-    }
-});
+import counterReducer from './counterSlice';
+import authReducer from './authSlice';
 
 const store = configureStore({
-    reducer: counterSlice.reducer
+    reducer: {counter: counterReducer, auth: authReducer}
 });
-
-export const counterActions = counterSlice.actions;
 
 export default store
 
-const counterReducer = (state = initialState, action) => {
-    if (action.type === 'increment') {
-        // state.counter++; DO NOT MUTATE STATE IN REDUX
-        return {
-            counter: state.counter + 1,
-            showCounter: state.showCounter
-        };
-    }
+// export const counterActions = counterSlice.actions;
+// export const authActions = authSlice.actions;
 
-    if (action.type === 'increase') {
-        return {
-            counter: state.counter + action.amount,
-            showCounter: state.showCounter
-        };
-    }
+// const counterReducer = (state = initialState, action) => {
+//     if (action.type === 'increment') {
+//         // state.counter++; DO NOT MUTATE STATE IN REDUX
+//         return {
+//             counter: state.counter + 1,
+//             showCounter: state.showCounter
+//         };
+//     }
 
-    if (action.type === 'decrement') {
-        return {
-            counter: state.counter - 1,
-            showCounter: state.showCounter
-        };
-    }
+//     if (action.type === 'increase') {
+//         return {
+//             counter: state.counter + action.amount,
+//             showCounter: state.showCounter
+//         };
+//     }
 
-    if (action.type === 'toggle') {
-        return {
-            showCounter: !state.showCounter,
-            counter: state.counter
-        };
-    }
+//     if (action.type === 'decrement') {
+//         return {
+//             counter: state.counter - 1,
+//             showCounter: state.showCounter
+//         };
+//     }
 
-    return state;
-}
+//     if (action.type === 'toggle') {
+//         return {
+//             showCounter: !state.showCounter,
+//             counter: state.counter
+//         };
+//     }
+
+//     return state;
+// }
 // const store = createStore(counterReducer);
